@@ -39,6 +39,7 @@ const NoteListView = ({
             borderRadius: 6,
             alignItems: "center",
             width: "60%",
+            boxShadow:"none"
           }}
         >
           <Search sx={{ p: 1.5 }} />
@@ -47,6 +48,7 @@ const NoteListView = ({
             // variant="standard"
             color="warning"
             placeholder="Search"
+            fullWidth
           ></InputBase>
         </Paper>
       </Box>
@@ -56,7 +58,7 @@ const NoteListView = ({
       <Box
         sx={{
           height: "calc(85vh - 32px)",
-          bgcolor: "#f6f6f6",
+          bgcolor: "#FFFFFF",
           //   overflow:"hidden",
           //   overflowY:"scroll",
           borderRadius: "2rem",

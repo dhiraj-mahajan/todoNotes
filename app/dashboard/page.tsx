@@ -1,10 +1,15 @@
 "use client";
-import { Box, Typography, Button, Stack } from "@mui/material";
+import { Box, Typography, Button, Stack, SvgIcon } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import React, { useState } from "react";
 import NoteDialog from "../components/dialog/dialog";
 import NoteListView from "./noteList";
 import ProfilePanel from "../components/profilePanel/profilePanel";
+import LogoWhite from "../../public/LogoWhite.png"
+import Image from "next/image";
+
+
+
 
 type NoteData = {
   id : string,
@@ -32,8 +37,8 @@ const Dashboard = () => {
   return (
     <Stack direction={"row"}>
       {/* Left side logo panel */}
-      <Box sx={{ width: "12vw" }}>
-        <ProfilePanel/>
+      <Box sx={{ width: "12vw", height: "15vh", display:"flex", justifyContent:"center", alignItems:"center"}}>
+        <Image width={50} height={50} src="/noteLogo.svg"/>
       </Box>
 
       {/* Right side Notes panel */}
