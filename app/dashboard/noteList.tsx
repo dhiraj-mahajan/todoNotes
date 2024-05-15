@@ -15,6 +15,7 @@ import {
   Search
 } from "@mui/icons-material";
 import { toggleDialog } from "../type/types";
+import { useState } from "react";
 
 console.log("data", data);
 
@@ -28,6 +29,7 @@ const NoteListView = ({
   noteList,
   deleteNote, 
 }: toggleDialog) => {
+  const [triggerClear, setTriggerClear] = useState(0)
   return (
     <Box>
       {/* Search bar section............... */}
@@ -96,7 +98,10 @@ const NoteListView = ({
                     }}
                   >
                     <IconButton
-                      onClick={() => closeDialog()}
+                      onClick={() => {
+                        closeDialog() 
+                        setTriggerClear(triggerClear+1)
+                      }}
                       sx={{ "&:hover": { background: "none" } }}
                     >
                       <Stack alignItems={"center"} gap={1}>
@@ -120,6 +125,7 @@ const NoteListView = ({
         closeDialog={closeDialog}
         noteListUpdate={noteListUpdate}
         noteList={noteList}
+        triggerClear={triggerClear}
       ></NoteDialog>
     </Box>
   );
