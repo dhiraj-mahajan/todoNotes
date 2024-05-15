@@ -23,6 +23,8 @@ type NoteData = {
 const Dashboard = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const [noteList, setNoteList] = useState<object[]>([]);
+  console.log("check push commit");
+  
 
 
   const closeDialog = () => setOpenDialog(!openDialog);

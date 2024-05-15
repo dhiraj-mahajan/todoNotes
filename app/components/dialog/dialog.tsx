@@ -12,9 +12,11 @@ import { toggleDialog, notesColor, severity } from "@/app/type/types";
 import { useState, useEffect } from "react";
 import {v4 as uuidv4} from 'uuid';
 
+type newType = toggleDialog & {
+  triggerClear: ()=>void
+}
 
-
-const NoteDialog = ({ openDialog, closeDialog, noteListUpdate, noteList }: toggleDialog) => {
+const NoteDialog = ({ openDialog, closeDialog, noteListUpdate, noteList, triggerClear }: newType ) => {
 
   const [value, setValue] = useState<string>('');
   const [isInputEmpty, setIsInputEmpty ] = useState<boolean>(false)
@@ -26,7 +28,7 @@ useEffect(()=>{
     setValue('')
     seNoteDescp('')
     setNoteColor("#e0e0e0")
-}, [])
+}, [triggerClear])
 
   const onInputFieldChange = (inpVal: string) => {
     if(inpVal){
@@ -40,11 +42,7 @@ useEffect(()=>{
 
   }
 
-  const addNoteInList = (val: string) => {
-
-    
-    
-    console.log("val", value);    
+  const addNoteInList = (val: string) => { 
     if(val){
         let todaysDate = new Date()
         const impObj = {
