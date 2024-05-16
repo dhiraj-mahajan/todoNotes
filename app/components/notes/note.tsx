@@ -18,7 +18,7 @@ const Notes = ({ id, title, desc, date, color, severity, deleteNote, expandOrEdi
     <Grid item xs={6} md={4}>
       <Box
         sx={{
-          height: "calc(40vh - 32px)",
+          height: "calc(42vh - 32px)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

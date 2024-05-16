@@ -39,7 +39,7 @@ useEffect(()=>{
 useEffect(()=>{
     if(triggerExpand || isEditMode){
         console.log("expand or edit trigger");
-        const findNote = preserveList?.find(item => item.id == triggerExpand)
+        const findNote = preserveList?.find(item => item.id == (triggerExpand || isEditMode))
         if(findNote){
             setValue(findNote?.title)
             seNoteDescp(findNote?.desc)
@@ -111,7 +111,7 @@ useEffect(()=>{
             value={value}
             onChange={(e) => onInputFieldChange(e.target.value)}
             error={isInputEmpty}
-            helperText={isInputEmpty && "This field can't be empty"} sx={{width:"40vw"}}
+            helperText={isInputEmpty && "This field can't be empty"} sx={{width:"35vw"}}
           ></TextField>
           <Stack direction={"row"} sx={{justifyContent:"space-between"}}>
           <TextField disabled={triggerExpand? true : false} label="Select color" select sx={{width:"48%"}} value={noteColor} onChange={(e)=> setNoteColor(e.target.value)}>
