@@ -1,23 +1,24 @@
 import { Grid, Box, Stack, Typography, IconButton } from "@mui/material";
-import { MoreVert, Fullscreen, EventNote, Delete, Adjust } from "@mui/icons-material";
+import { Edit, Fullscreen, EventNote, Delete, Adjust } from "@mui/icons-material";
 
 type Props = {
-  id: Number;
+  id: string;
   title: String;
   desc: String;
   date: String;
   color: String;
-  deleteNote:(value: unknown)=>void,
+  deleteNote:(value: string)=>void,
   severity:string
+  expandOrEditNote: (value: object)=>void,
 };
-const Notes = ({ id, title, desc, date, color, severity, deleteNote}: Props) => {
+const Notes = ({ id, title, desc, date, color, severity, deleteNote, expandOrEditNote}: Props) => {
     console.log("sevirity", severity);
     
   return (
     <Grid item xs={6} md={4}>
       <Box
         sx={{
-          height: "calc(40vh - 32px)",
+          height: "calc(42vh - 32px)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -66,8 +67,8 @@ const Notes = ({ id, title, desc, date, color, severity, deleteNote}: Props) => 
                 <IconButton onClick={()=> deleteNote(id)} size="small">
                   <Delete sx={{ fontSize: 20, color: "iconColor.main" }} />
                 </IconButton>
-                <IconButton size="small">
-                  <MoreVert sx={{ fontSize: 20 }} />
+                <IconButton size="small" onClick={()=>expandOrEditNote({type:"edit", id:id})} >
+                  <Edit sx={{ fontSize: 20, color: "iconColor.main" }} />
                 </IconButton>
               </Stack>
             </Stack>
@@ -100,6 +101,7 @@ const Notes = ({ id, title, desc, date, color, severity, deleteNote}: Props) => 
                 color="secondary"
                 size="small"
                 sx={{ bgcolor: "iconColor.main" }}
+                onClick={()=>expandOrEditNote({type:"expand", id:id})}
               >
                 <Fullscreen sx={{ fontSize: 17 }} />
               </IconButton>

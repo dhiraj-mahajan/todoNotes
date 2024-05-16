@@ -1,6 +1,6 @@
 export type toggleDialog = {
     openDialog: boolean,
-    noteList?:object[],
+    preserveList?:object[],
     closeDialog: () => void,
     noteListUpdate: (value : object[]) => void,
     deleteNote?:(value: string)=>void

@@ -1,3 +1,4 @@
+"use client";
 import {
   Box,
   Stack,
@@ -14,7 +15,6 @@ import {
   AddCircle,
   Search
 } from "@mui/icons-material";
-import { toggleDialog } from "../type/types";
 import { useState } from "react";
 
 console.log("data", data);
@@ -22,20 +22,63 @@ console.log("data", data);
 
 // m: 3, width: "60%",
 
-const NoteListView = ({
-  openDialog,
-  closeDialog,
-  noteListUpdate,
-  noteList,
-  deleteNote, 
-}: toggleDialog) => {
+const NoteListView = () => {
+    const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [noteList, setNoteList] = useState<object[]>([]);
+  const [preserveList, setPreserveList] = useState<object[]>([]);
   const [triggerClear, setTriggerClear] = useState(0)
+  const [triggerExpand, setTriggerExpand] = useState('')
+  const [isEditMode, setIsEditMode] = useState('')
+
+  const expandOrEditNote = (values:object) => {
+    if(values?.type == "expand"){
+        setTriggerExpand(values?.id)
+        setIsEditMode('')
+    setOpenDialog(true)
+    }else if(values?.type == "edit"){
+        setIsEditMode(values?.id)
+        setTriggerExpand('')
+    setOpenDialog(true)
+
+    }
+    
+}
+
+  const closeDialog = () => {setOpenDialog(!openDialog)
+    setTriggerExpand('')
+    setIsEditMode('')
+  };
+
+  const noteListUpdate = (value: object[]) => {
+    setNoteList(value);
+    setPreserveList(value);
+}
+  const deleteNote = (val:String)=>{
+    const sortedArray = noteList.filter((item)=> item?.id !== val)
+    setNoteList(sortedArray)
+    setPreserveList(sortedArray)
+  }
+
+  const searchOption = (searchVal:String)=>{
+    if(searchVal){
+        let newlist = preserveList.filter((lstItem)=>{
+            return (lstItem?.title.toLowerCase().includes(searchVal) || lstItem?.desc.toLowerCase().includes(searchVal))
+
+        })
+        setNoteList(newlist)
+
+    }else{
+        setNoteList([...preserveList])
+    }
+  }
+
   return (
     <Box>
       {/* Search bar section............... */}
       <Box sx={{ height: "15vh", display: "flex", alignItems: "center" }}>
         <Paper
           component="form"
+          onSubmit={(e)=>e.preventDefault()}
           sx={{
             display: "flex",
             borderRadius: 6,
@@ -46,11 +89,9 @@ const NoteListView = ({
         >
           <Search sx={{ p: 1.5 }} />
           <InputBase
-            //   sx={{ width: "100%" }}
-            // variant="standard"
-            color="warning"
             placeholder="Search"
             fullWidth
+            onChange={(e)=>searchOption(e.target.value.toLowerCase())}
           ></InputBase>
         </Paper>
       </Box>
@@ -114,7 +155,7 @@ const NoteListView = ({
               </Box>
             </Grid>
             {/* Iterate through data to display notes */}
-            {noteList.map((item)=><Notes key={item.id} id={item.id} desc={item.desc} title={item.title} date={item.date} color={item.color} severity={item.severity} deleteNote={deleteNote}/>)}
+            {noteList.map((item)=><Notes key={item.id} id={item.id} desc={item.desc} title={item.title} date={item.date} color={item.color} severity={item.severity} deleteNote={deleteNote} expandOrEditNote={expandOrEditNote}/>)}
 
           </Grid>
         </Box>
@@ -124,8 +165,10 @@ const NoteListView = ({
         openDialog={openDialog}
         closeDialog={closeDialog}
         noteListUpdate={noteListUpdate}
-        noteList={noteList}
+        preserveList={preserveList}
         triggerClear={triggerClear}
+        triggerExpand={triggerExpand}
+        isEditMode={isEditMode}
       ></NoteDialog>
     </Box>
   );
